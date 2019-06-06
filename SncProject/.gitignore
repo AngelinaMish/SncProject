@@ -13,6 +13,7 @@ config
 
 # Apex Log as optional
 apex-scripts/log
+*.cls-meta.xml
 
 # Eclipse specific
 salesforce.schema
