@@ -1,0 +1,66 @@
+<aura:component  controller="ObjectPageController" implements="force:appHostable,flexipage:availableForRecordHome"  access="global"><!--
+ - Created by amyshkovets on 5/24/2019.
+ -->
+
+
+    <aura:attribute name="Objects" type="Object[]"/>
+    <aura:attribute name="rows" type="List"/>
+    <aura:attribute name="colomns" type="Object[]"/>
+    <aura:attribute name="page" type="integer" />
+    <aura:attribute name="pages" type="integer"/>
+    <aura:attribute name="total" type="integer"/>
+    <aura:attribute name="recordSize" type="integer" default="10"/>
+    <aura:attribute name="selectedObject" type="String"/>
+    <aura:attribute name="fields" type="List" default="[]"/>
+    <aura:attribute name="truthy" type="Boolean" default="false"/>
+    <aura:attribute name="tru" type="Boolean" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="cmpEvent" event="c:ClTable" action="{!c.handleComponentEvent}"/>
+
+    <div class="slds-m-around_small">
+        <div class="slds-page-header" role="banner">
+            <div class="slds-align_absolute-center">
+                <lightning:button disabled="{!v.page == 1}" variant="brand" label="Previous Page" onclick="{! c.navigate }" />
+                <lightning:button disabled="{!v.page == v.pages}" aura:id="previousPage" variant="brand" label="Next Page" onclick="{! c.navigate }" />
+            </div>
+            <p class="slds-page-header__title slds-truncate">{!v.total} Objects • page {!v.page} / {!v.pages}</p>
+        </div>
+
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="Name">Master Label</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <aura:iteration items="{!v.rows}" var="row">
+                <tr class="slds-hint-parent">
+                    <td >
+                     <div class="slds-truncate" >
+                            <c:ObjectPopFields obj="{!row.col1}" />
+                       </div>
+                    </td>
+                    <td >
+                        <div class="slds-truncate" >
+                            <c:ObjectPopFields obj="{!row.col2}" />
+                        </div>
+                    </td>
+                </tr>
+
+            </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+
+    <aura:if  isTrue="{!v.truthy}">
+        <div >
+           <c:RecordView aura:id="records"  />
+        </div>
+
+    </aura:if>
+
+</aura:component>

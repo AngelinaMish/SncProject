@@ -1,0 +1,44 @@
+<!--
+ - Created by amyshkovets on 5/27/2019.
+ -->
+
+<aura:component controller="RcordViewController"   implements="force:appHostable,flexipage:availableForRecordHome, flexipage:availableForAllPageTypes,lightning:actionOverride,force:hasRecordId"   access="global">
+
+    <aura:method name="getScoreMethod" action="{!c.calcScore}" access="PUBLIC">
+        <aura:attribute name="fields" type="List" default="[]"/>
+        <aura:attribute name="selectedObject" type="String"/>
+    </aura:method>
+
+    <aura:attribute name="objectNew" type="String"/>
+    <aura:attribute  name="recordList" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedField" type="String"/>
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    <aura:attribute name="defaultSortDirection" type="String"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute name="recordId" type="Id"  />
+
+    <aura:handler event="force:showToast" action="{!c.refreshView}" />
+
+    <button class="slds-button slds-button_neutral" onclick="{!c.createNew}">Create New</button>
+
+    <div  class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols">
+      <lightning:datatable
+                           data="{!v.recordList }"
+                           columns="{!v.columns }"
+                           keyField="id"
+                           ideCheckboxColumn="false"
+                           sortedBy="{!v.sortedBy }"
+                           sortedDirection="{!v.sortedDirection }"
+                           defaultSortDirection="{!v.defaultSortDirection }"
+                           onsort="{!c.updateColumnSorting }"
+                           onrowaction="{!c.handleRowAction }"/>
+        </div>
+
+        <aura:if isTrue="{! v.isLoading }">
+            <lightning:spinner alternativeText="Loading"/>
+        </aura:if>
+
+
+</aura:component>

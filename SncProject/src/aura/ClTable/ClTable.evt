@@ -1,0 +1,8 @@
+<!--
+ - Created by amyshkovets on 5/28/2019.
+ -->
+
+<aura:event type="COMPONENT" description="ClTable">
+    <aura:attribute name="fields" type="List"/>
+    <aura:attribute name="selectedObj" type="String"/>
+</aura:event>
